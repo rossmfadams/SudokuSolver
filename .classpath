@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="lib" path="C:/javaworkspace/swe/SudokuSolver/mysql-connector-java-8.0.23.jar"/>
+	<classpathentry kind="lib" path="C:/javaworkspace/swe/SudokuSolver/ocsf.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV-3413"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
