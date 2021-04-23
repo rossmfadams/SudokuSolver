@@ -1,24 +1,31 @@
 // Referencing code from 
 
-package sudokuSolver;
+package com.sudokuSolver;
 
 import java.awt.*;
+import java.util.concurrent.atomic.AtomicReference;
+
 import javax.swing.*;
 
+import org.bytedeco.javacpp.opencv_core.Mat;
+import org.bytedeco.javacpp.opencv_videoio.VideoCapture;
 import org.bytedeco.javacv.CanvasFrame;
+import static org.bytedeco.javacpp.opencv_videoio.CV_CAP_PROP_FRAME_HEIGHT;
+import static org.bytedeco.javacpp.opencv_videoio.CV_CAP_PROP_FRAME_WIDTH;
 
+@SuppressWarnings("serial")
 public class SudokuPanel extends JPanel 
 {
 	// Private Data Fields
 	private JLabel sudokuLabel;
 	private JButton connectButton;
-	private AtomicReference capture;
+	private AtomicReference<VideoCapture> capture;
 
 	// Constructor for the Sudoku Panel.
 	public SudokuPanel()
 	{ 
 		// Create the Mainframe
-		CanvasFrame mainframe = newCanasFrame("Sudoku Solver");
+		CanvasFrame mainframe = new CanvasFrame("Sudoku Solver");
 		mainframe.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 		mainframe.setCanvasSize(600, 600);
 		mainframe.setLocationRelativeTo(null);
@@ -43,9 +50,7 @@ public class SudokuPanel extends JPanel
 		Mat colorimg = new Mat();
 
 		// Black and White Video Feed
-		while(true) {
-			
-		}
+		//while(true) {}
 
 		// Black and White Results Image
 		CanvasFrame result = new CanvasFrame("Results");

@@ -1,4 +1,4 @@
-package sudokuSolver;
+package com.sudokuSolver;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +10,7 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class ServerGUI extends JFrame
 {
-	private JLabel status; //Initialized to “Not Connected”
+	private JLabel status; //Initialized to ï¿½Not Connectedï¿½
 	private JLabel logLabel;
 
 	private String[] labels = {"Port #", "Timeout"};
@@ -26,24 +26,24 @@ public class ServerGUI extends JFrame
 	private JButton stop;
 	private JButton quit;
 
-	private ChatServer server;
+	private ServerCommunication server;
 
 	public ServerGUI()
 	{
-		server = new ChatServer();
+		server = new ServerCommunication(8300);
 
 		this.setTitle("Server");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//---- Panel for status ----
-		//Create a status containing “Status: Not Connected”
+		//Create a status containing ï¿½Status: Not Connectedï¿½
 		JLabel statusLb = new JLabel("Status: ");
 
 		status = new JLabel("Not Connected");
 		status.setForeground(Color.RED);
 		server.setStatus(status);
 
-		//Store the JLabel in a JPanel named “north” that implements FlowLayout as the Layout Manager
+		//Store the JLabel in a JPanel named ï¿½northï¿½ that implements FlowLayout as the Layout Manager
 		JPanel north = new JPanel(new FlowLayout());
 		north.add(statusLb);
 		north.add(status);
@@ -117,7 +117,7 @@ public class ServerGUI extends JFrame
 		stop = new JButton("Stop");
 		quit = new JButton("Quit");
 
-		//Store the JButtons in a JPanel named “south” that implements FlowLayout as the Layout Manager
+		//Store the JButtons in a JPanel named ï¿½southï¿½ that implements FlowLayout as the Layout Manager
 		JPanel south = new JPanel(new FlowLayout());
 		south.add(listen);
 		south.add(close);

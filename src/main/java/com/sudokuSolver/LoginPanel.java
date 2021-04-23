@@ -1,9 +1,10 @@
-package sudokuSolver;
+package com.sudokuSolver;
 
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
+@SuppressWarnings("serial")
 public class LoginPanel extends JPanel
 {
   // Private data fields for the important GUI components.

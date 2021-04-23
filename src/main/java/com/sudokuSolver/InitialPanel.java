@@ -1,8 +1,9 @@
-package sudokuSolver;
+package com.sudokuSolver;
 
 import java.awt.*;
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class InitialPanel extends JPanel
 {
   // Constructor for the initial panel.

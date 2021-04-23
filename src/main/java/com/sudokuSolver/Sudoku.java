@@ -1,4 +1,4 @@
-package sudokuSolver;
+package com.sudokuSolver;
 
 import org.nd4j.linalg.api.ndarray.INDArray;
 

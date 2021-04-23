@@ -1,4 +1,4 @@
-package sudokuSolver;
+package com.sudokuSolver;
 import java.util.Comparator;
 import org.deeplearning4j.clustering.cluster.Cluster;
 

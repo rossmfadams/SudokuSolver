@@ -1,10 +1,9 @@
-package sudokuSolver;
+package com.sudokuSolver;
 
 import java.awt.Color;
 
 import javax.swing.*;
 
-import lab7out.Database;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
