@@ -4,7 +4,7 @@ import com.sudokuSolver.CreateAccountControl;
 import com.sudokuSolver.LoginControl;
 import ocsf.client.AbstractClient;
 
-public class ClientCommunication extends AbstractClient{
+public class SudokuClient extends AbstractClient{
 
 	private LoginControl loginControl;
 	private CreateAccountControl createAccountControl;
@@ -17,7 +17,7 @@ public class ClientCommunication extends AbstractClient{
 	{
 		this.createAccountControl = createAccountControl;
 	}
-	public ClientCommunication(String host, int port) {
+	public SudokuClient(String host, int port) {
 		super(host, port);
 	}
 

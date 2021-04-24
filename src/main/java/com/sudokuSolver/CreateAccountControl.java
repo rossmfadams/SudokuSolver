@@ -9,10 +9,10 @@ public class CreateAccountControl implements ActionListener
 {
   // Private data fields for the container and chat client.
   private JPanel container;
-  private ClientCommunication client;
+  private SudokuClient client;
   
   // Constructor for the create account controller.
-  public CreateAccountControl(JPanel container, ClientCommunication client)
+  public CreateAccountControl(JPanel container, SudokuClient client)
   {
     this.container = container;
     this.client = client;

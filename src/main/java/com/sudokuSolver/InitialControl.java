@@ -8,9 +8,9 @@ public class InitialControl implements ActionListener
 {
   // Private data field for storing the container.
   private JPanel container;
-  private ClientCommunication client;
+  private SudokuClient client;
   // Constructor for the initial controller.
-  public InitialControl(JPanel container, ClientCommunication client)
+  public InitialControl(JPanel container, SudokuClient client)
   {
     this.container = container;
     this.client = client;

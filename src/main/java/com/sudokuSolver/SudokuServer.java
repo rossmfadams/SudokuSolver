@@ -7,13 +7,13 @@ import javax.swing.*;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
-public class ServerCommunication extends AbstractServer{
+public class SudokuServer extends AbstractServer{
 
 	private JLabel status;
 	private JTextArea log;
 	private Database database = new Database();
 	
-	public ServerCommunication(int port) {
+	public SudokuServer(int port) {
 		super(port);
 	}
 

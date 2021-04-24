@@ -13,7 +13,7 @@ public class ClientGUI extends JFrame
 	public ClientGUI()
 	{
 		// Set up the chat client.
-		ClientCommunication client = new ClientCommunication("localhost", 8300);
+		SudokuClient client = new SudokuClient("localhost", 8300);
 		client.setHost("localhost");
 		client.setPort(8300);
 		try

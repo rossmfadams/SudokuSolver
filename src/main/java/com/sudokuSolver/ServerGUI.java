@@ -26,11 +26,11 @@ public class ServerGUI extends JFrame
 	private JButton stop;
 	private JButton quit;
 
-	private ServerCommunication server;
+	private SudokuServer server;
 
 	public ServerGUI()
 	{
-		server = new ServerCommunication(8300);
+		server = new SudokuServer(8300);
 
 		this.setTitle("Server");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
