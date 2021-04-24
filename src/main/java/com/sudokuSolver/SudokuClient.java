@@ -2,6 +2,8 @@ package com.sudokuSolver;
 
 import com.sudokuSolver.CreateAccountControl;
 import com.sudokuSolver.LoginControl;
+
+import lab7out.Error;
 import ocsf.client.AbstractClient;
 
 public class SudokuClient extends AbstractClient{
@@ -41,6 +43,24 @@ public class SudokuClient extends AbstractClient{
 			{
 				createAccountControl.createAccountSuccess();
 			}
+			//for error
+			else if (arg0 instanceof Error)
+		    {
+		      // Get the Error object.
+		      Error error = (Error)arg0;
+		      
+		      // Display login errors using the login controller.
+		      if (error.getType().equals("Login"))
+		      {
+		        loginControl.displayError(error.getMessage());
+		      }
+		      
+		      // Display account creation errors using the create account controller.
+		      else if (error.getType().equals("CreateAccount"))
+		      {
+		        createAccountControl.displayError(error.getMessage());
+		      }
+		    }
 		}
 	}
 
