@@ -2,7 +2,8 @@ package com.sudokuSolver;
 
 import com.sudokuSolver.CreateAccountControl;
 import com.sudokuSolver.LoginControl;
-import com.sudokuSolver.Error;
+
+import lab7out.Error;
 import ocsf.client.AbstractClient;
 
 public class SudokuClient extends AbstractClient{
