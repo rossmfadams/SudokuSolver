@@ -3,6 +3,9 @@ package com.sudokuSolver;
 import java.awt.Color;
 import java.io.IOException;
 import javax.swing.*;
+
+import org.bytedeco.javacpp.opencv_core.Mat;
+
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
@@ -22,8 +25,16 @@ public class SudokuServer extends AbstractServer{
 	@Override
 	protected void handleMessageFromClient(Object arg0, ConnectionToClient arg1) {
 		 
-		if(arg0 instanceof SudokuSolver) {
+		if(arg0 instanceof Mat) {
+			Mat colorimg = (Mat)arg0;
+			Object result;
+			result = SudokuSolver.run(colorimg);
 			
+			try {
+				arg1.sendToClient(result);
+			} catch (IOException e) {
+				return;
+			}
 		}
 
 

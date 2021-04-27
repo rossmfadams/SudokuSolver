@@ -28,7 +28,7 @@ public class ClientGUI extends JFrame
 
 
 		// Set the title and default close operation.
-		this.setTitle("Chat Client");
+		this.setTitle("Sudoku Client");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Create the card layout container.
