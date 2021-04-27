@@ -72,7 +72,7 @@ public class SudokuServer extends AbstractServer{
 	      // Try to create the account.
 	      CreateAccountData data = (CreateAccountData)arg0;
 	      Object result;
-	      if (!database.createNewAcccount(data.getUsername(), data.getPassword()))
+	      if (database.createNewAcccount(data.getUsername(), data.getPassword()))
 	      {
 	        result = "CreateAccountSuccessful";
 	        log.append("Client " + arg1.getId() + " created a new account called " + data.getUsername() + "\n");
