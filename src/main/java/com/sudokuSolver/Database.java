@@ -107,7 +107,7 @@ public class Database
 		// Store the new username and encrypted password in User table;
 		if(result.equals(null))
 		{
-			String insertQuery = "insert into user values('" + user + "', aes_encrypt('" + pass + "', 'key'));";
+			String insertQuery  = "insert into user values('" + user + "', aes_encrypt('" + pass + "', 'key'));";
 			this.query(insertQuery);
 
 			return true;	
@@ -119,7 +119,7 @@ public class Database
 	public boolean verifyLogin(String user, String pass) {
 		// Search Database for Username and Password
 		ArrayList<String> result;
-		String selectQuery = "select username, aes_decrypt(password, 'key') from user where username = '" + user +"';";
+		String selectQuery = "select password, aes_decrypt(password, 'key') from user where username = '" + user +"';";
 		result = this.query(selectQuery);
 		String verifiedPass = result.get(0);
 

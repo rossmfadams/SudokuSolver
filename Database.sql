@@ -1,10 +1,17 @@
-drop table User;
-Create TABLE User
+drop table user;
+CREATE TABLE user
 	(
 	username	varchar (25),
 	password	binary(16));
 
-alter table User 
-	add constraint User_username_pk primary key(username); 
-ALTER TABLE User
-	ADD CONSTRAINT User_password_CK CHECK (DATALENGTH (password) >= 6);
+alter table user 
+	add constraint user_username_pk primary key(username); 
+
+insert into user
+	values('rossa', aes_encrypt('graduate','key'));
+insert into user
+	values('ambera', aes_encrypt('graduate','key'));
+insert into user
+	values('ianm', aes_encrypt('graduate','key'));
+insert into user
+	values('sandersonh', aes_encrypt('graduate','key'));

@@ -23,6 +23,10 @@ public class SudokuControl implements ActionListener{
 	private MyCanvas objCanvas;
 	private static final OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
 
+	public SudokuControl(JPanel container, SudokuClient client) {
+		this.container = container;
+		this.client = client;
+	}
 	public void actionPerformed(ActionEvent ae) {
 		// TODO Auto-generated method stub
 		String command = ae.getActionCommand();
