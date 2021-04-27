@@ -129,5 +129,27 @@ public class Database
 		return false; 
 	}
 
+	public void setConnection(String string) {
+		// TODO Auto-generated method stub
+		  Connection conn = null;
+		  Properties prop = new Properties();
+		  String user = prop.getProperty("user");
+		  String pass = prop.getProperty("password");
+		  String url = prop.getProperty("url");
+		  try {
+		conn = DriverManager.getConnection(url, user, pass);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  
+		  this.conn = conn;
+	}
+
+	public Connection getConnection() {
+		// TODO Auto-generated method stub
+		return conn;
+	}
+
 }
 
