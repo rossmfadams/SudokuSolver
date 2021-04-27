@@ -1,10 +1,5 @@
 package com.sudokuSolver;
 
-import java.awt.BorderLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,10 +10,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicReference;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.SwingUtilities;
 import org.bytedeco.javacpp.indexer.FloatRawIndexer;
 import org.bytedeco.javacpp.opencv_core.RotatedRect;
 import static org.bytedeco.javacpp.opencv_imgcodecs.imwrite;
@@ -66,10 +57,6 @@ import static org.bytedeco.javacpp.opencv_imgproc.putText;
 import static org.bytedeco.javacpp.opencv_imgproc.resize;
 import static org.bytedeco.javacpp.opencv_imgproc.warpAffine;
 import static org.bytedeco.javacpp.opencv_imgproc.warpPerspective;
-import static org.bytedeco.javacpp.opencv_videoio.CV_CAP_PROP_FRAME_HEIGHT;
-import static org.bytedeco.javacpp.opencv_videoio.CV_CAP_PROP_FRAME_WIDTH;
-import org.bytedeco.javacpp.opencv_videoio.VideoCapture;
-import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.OpenCVFrameConverter;
 import org.datavec.image.loader.NativeImageLoader;
 import org.deeplearning4j.clustering.cluster.Cluster;
@@ -179,6 +166,8 @@ public class SudokuSolver {
 		Mat p = getPerspectiveTransform(srcPts.position(0), dstPts.position(0));
 		Mat img = new Mat(new Size(600, 600), image.type());//image.size()
 		warpPerspective(image, img, p, img.size());
+		srcPts.close();
+		dstPts.close();
 		return img;
 	}
 
@@ -238,7 +227,7 @@ public class SudokuSolver {
 
 	/*Get points of intersection between vertical and horizontal lines*/
 	private static List<Point> getPoint(List<Cluster> vlines, List<Cluster> hlines) {
-		List<Point> points = new ArrayList();
+		List<Point> points = new ArrayList<Point>();
 		for (int i = 0; i < hlines.size(); i++) {
 			Cluster get = hlines.get(i);
 			double r1 = get.getCenter().getArray().getDouble(0);
@@ -286,6 +275,7 @@ public class SudokuSolver {
 
 
 	/*Dected a digit given a cell mat object*/
+	@SuppressWarnings("resource")
 	private static Mat detectDigit(Mat img) {
 		Mat res = new Mat();
 		MatVector countours = new MatVector();
@@ -315,6 +305,7 @@ public class SudokuSolver {
 			resize(res, res, new Size(28, 28));
 			return res;
 		} else {
+			res.close();
 			return img;//org.bytedeco.javacpp.helper.AbstractMat.EMPTY
 		}
 	}
@@ -541,7 +532,7 @@ public class SudokuSolver {
 			} else {
 				result = new Error ("No puzzle detected","sudokuErr");
 			} // End if vlines hlines
-
+			clonedf.release();
 		} else {
 			result = new Error("No puzzle detected", "sudokuErr");
 		} //End If sudoku puzzle exists
