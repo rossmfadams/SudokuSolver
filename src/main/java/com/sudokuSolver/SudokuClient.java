@@ -1,10 +1,5 @@
 package com.sudokuSolver;
 
-import org.bytedeco.javacpp.opencv_core.Mat;
-
-import com.sudokuSolver.CreateAccountControl;
-import com.sudokuSolver.LoginControl;
-
 import ocsf.client.AbstractClient;
 
 public class SudokuClient extends AbstractClient{
