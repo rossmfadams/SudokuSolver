@@ -3,6 +3,10 @@
 package com.sudokuSolver;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.*;
@@ -16,58 +20,46 @@ import static org.bytedeco.javacpp.opencv_videoio.CV_CAP_PROP_FRAME_WIDTH;
 @SuppressWarnings("serial")
 public class SudokuPanel extends JPanel 
 {
-	// Private Data Fields
-	private JLabel sudokuLabel;
-	private JButton connectButton;
-	private AtomicReference<VideoCapture> capture;
-
+	private MyCanvas objCanvas;
+	private JButton control;
+	private JLabel errorLabel;
+	
 	// Constructor for the Sudoku Panel.
-	public SudokuPanel()
+	public SudokuPanel(SudokuControl sc)
 	{ 
-		// Create the Mainframe
-		CanvasFrame mainframe = new CanvasFrame("Sudoku Solver");
-		mainframe.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-		mainframe.setCanvasSize(600, 600);
-		mainframe.setLocationRelativeTo(null);
-        mainframe.setLayout(new BoxLayout(mainframe.getContentPane(), BoxLayout.Y_AXIS));
-        
-        
-		// Create Sudoku Solver label.
-		sudokuLabel = new JLabel("Sudoku Solver", JLabel.CENTER);
+		// Create the information labels.
+		JLabel label = new JLabel("Sudoku Solver", JLabel.CENTER);
+		errorLabel = new JLabel("",JLabel.CENTER);
 		
-		// Create the Video Panels
-		capture = new AtomicReference<>(new VideoCapture());
-		capture.get().set(CV_CAP_PROP_FRAME_WIDTH, 1280);
-		capture.get().set(CV_CAP_PROP_FRAME_HEIGHT, 720);
+		// Create Canvas
+		objCanvas = new MyCanvas();
+		JPanel canvasBuffer = new JPanel();
+		canvasBuffer.add(objCanvas);
 
-		if (!capture.get().open(0)) {
-			//log.error("Can not open the cam !!!");
-		}
+		// Create the control button.
+		control = new JButton("Start");
+		control.addActionListener(sc);
+		JPanel controlButtonBuffer = new JPanel();
+		controlButtonBuffer.add(control);
 
-		final AtomicReference<Boolean> start = new AtomicReference<>(true);
-		
-		// Colored Video Feed
-		Mat colorimg = new Mat();
-
-		// Black and White Video Feed
-		//while(true) {}
-
-		// Black and White Results Image
-		CanvasFrame result = new CanvasFrame("Results");
-		result.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-		result.setCanvasSize(500, 500);
-		result.setLocation(0, 440);
-
-		
-		// Create the Connect Webcam Button
-		connectButton = new JButton("Connect Webcam");
-		
-
-		// Add components to frame
-		mainframe.add(sudokuLabel, BorderLayout.CENTER);
-		
-		mainframe.pack();
-		mainframe.setVisible(true);
-		
+		// Arrange the components in a grid.
+		JPanel grid = new JPanel(new GridLayout(4, 1, 5, 5));
+		grid.add(label);
+		grid.add(errorLabel);
+		grid.add(canvasBuffer);
+		grid.add(controlButtonBuffer);
+		this.add(grid);
+	}
+	
+	public MyCanvas getCanvas() {
+		return objCanvas;
+	}
+	
+	public void setError(String error) {
+		errorLabel.setText(error);
+	}
+	
+	public void setControlButton(String msg) {
+		control.setText(msg);
 	}
 }

@@ -6,6 +6,7 @@ public class SudokuClient extends AbstractClient{
 
 	private LoginControl loginControl;
 	private CreateAccountControl createAccountControl;
+	private SudokuControl sudokuControl;
 
 	public void setLoginControl(LoginControl loginControl)
 	{
@@ -15,6 +16,11 @@ public class SudokuClient extends AbstractClient{
 	{
 		this.createAccountControl = createAccountControl;
 	}
+
+	public void setSudokuControl(SudokuControl sudokuControl) {
+		this.sudokuControl = sudokuControl;
+	}
+
 	public SudokuClient(String host, int port) {
 		super(host, port);
 	}
@@ -39,24 +45,34 @@ public class SudokuClient extends AbstractClient{
 			{
 				createAccountControl.createAccountSuccess();
 			}
-			//for error
-			else if (arg0 instanceof Error)
-		    {
-		      // Get the Error object.
-		      Error error = (Error)arg0;
-		      
-		      // Display login errors using the login controller.
-		      if (error.getType().equals("Login"))
-		      {
-		        loginControl.displayError(error.getMessage());
-		      }
-		      
-		      // Display account creation errors using the create account controller.
-		      else if (error.getType().equals("CreateAccount"))
-		      {
-		        createAccountControl.displayError(error.getMessage());
-		      }
-		    }
+		} // End if string
+		else if (arg0 instanceof Mat) {
+			Mat resultImg = (Mat)arg0;
+			sudokuControl.start.set(false);
+			sudokuControl.capture.get().release();
+			sudokuControl.sudokuSuccess(resultImg);
+		}
+		//for error
+		else if (arg0 instanceof Error)
+		{
+			// Get the Error object.
+			Error error = (Error)arg0;
+
+			// Display login errors using the login controller.
+			if (error.getType().equals("Login"))
+			{
+				loginControl.displayError(error.getMessage());
+			}
+
+			// Display account creation errors using the create account controller.
+			else if (error.getType().equals("CreateAccount"))
+			{
+				createAccountControl.displayError(error.getMessage());
+			}
+			
+			else if (error.getType().equals("sudokuErr")) {
+				sudokuControl.displayError(error.getMessage());
+			}
 		}
 	}
 
