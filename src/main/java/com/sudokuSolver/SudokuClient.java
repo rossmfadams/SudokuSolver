@@ -1,14 +1,11 @@
 package com.sudokuSolver;
 
-import org.bytedeco.javacpp.opencv_core.Mat;
-
 import ocsf.client.AbstractClient;
 
 public class SudokuClient extends AbstractClient{
 
 	private LoginControl loginControl;
 	private CreateAccountControl createAccountControl;
-	private SudokuControl sudokuControl;
 
 	public void setLoginControl(LoginControl loginControl)
 	{
@@ -17,10 +14,6 @@ public class SudokuClient extends AbstractClient{
 	public void setCreateAccountControl(CreateAccountControl createAccountControl)
 	{
 		this.createAccountControl = createAccountControl;
-	}
-
-	public void setSudokuControl(SudokuControl sudokuControl) {
-		this.sudokuControl = sudokuControl;
 	}
 
 	public SudokuClient(String host, int port) {
@@ -45,15 +38,11 @@ public class SudokuClient extends AbstractClient{
 			// If we successfully created an account, tell the create account controller.
 			else if (message.equals("CreateAccountSuccessful"))
 			{
+				
 				createAccountControl.createAccountSuccess();
 			}
 		} // End if string
-		else if (arg0 instanceof Mat) {
-			Mat resultImg = (Mat)arg0;
-			sudokuControl.start.set(false);
-			sudokuControl.capture.get().release();
-			sudokuControl.sudokuSuccess(resultImg);
-		}
+		
 		//for error
 		else if (arg0 instanceof Error)
 		{
@@ -70,10 +59,6 @@ public class SudokuClient extends AbstractClient{
 			else if (error.getType().equals("CreateAccount"))
 			{
 				createAccountControl.displayError(error.getMessage());
-			}
-			
-			else if (error.getType().equals("sudokuErr")) {
-				sudokuControl.displayError(error.getMessage());
 			}
 		}
 	}

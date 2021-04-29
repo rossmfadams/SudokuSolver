@@ -10,8 +10,8 @@ alter table user
 insert into user
 	values('rossa', aes_encrypt('graduate','key'));
 insert into user
-	values('ambera', aes_encrypt('graduate','key'));
+	values('ambera', aes_encrypt('graduate1','key'));
 insert into user
-	values('ianm', aes_encrypt('graduate','key'));
+	values('ianm', aes_encrypt('graduate2','key'));
 insert into user
-	values('sandersonh', aes_encrypt('graduate','key'));
+	values('sandersonh', aes_encrypt('graduate3','key'));

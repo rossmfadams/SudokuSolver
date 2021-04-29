@@ -5,6 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
+@SuppressWarnings("serial")
 public class CreateAccountPanel extends JPanel
 {
 	// Private data fields for the important GUI components.

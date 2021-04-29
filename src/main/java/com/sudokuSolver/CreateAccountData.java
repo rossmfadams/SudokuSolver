@@ -2,6 +2,7 @@ package com.sudokuSolver;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class CreateAccountData implements Serializable 
 {
   // Private data fields for the username and password.

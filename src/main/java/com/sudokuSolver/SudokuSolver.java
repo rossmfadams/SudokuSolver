@@ -70,19 +70,36 @@ import org.nd4j.linalg.factory.Nd4j;
 import org.slf4j.LoggerFactory;
 
 /**
- * Kindly, Don't Remove this Header.
+ * A class to process a Mat img, detect a sudoku puzzle, recognize digits, and solve the puzzle
  *
- * @author Taha Emara 
- * Website: http://www.emaraic.com 
- * Email : taha@emaraic.com
- * Created on: May 10, 2018
+ * Modified from Taha Emara, http://ww.emaraic.com
+ * @author Ross Adams
  */
 public class SudokuSolver {
 
-	private static final OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
 	private final static int[] DIGITS = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 	private static MultiLayerNetwork NETWORK;
 	private static final org.slf4j.Logger log = LoggerFactory.getLogger(SudokuSolver.class);
+	private boolean solved = false;
+	private String error = "";
+	
+	public SudokuSolver() {}
+	
+	public void setSolved(boolean bool) {
+		solved = bool;
+	}
+	
+	public void setError(String error) {
+		this.error = error;
+	}
+	
+	public boolean getSolved() {
+		return solved;
+	}
+	
+	public String getError() {
+		return error;
+	}
 
 	private static MultiLayerNetwork loadNetwork() {
 		MultiLayerNetwork network = null;
@@ -361,24 +378,24 @@ public class SudokuSolver {
 		return false;
 	}
 
-	public static Object run(Mat colorimg) {
-		Object result;
+	public Mat run(Mat colorimg) {
+		Mat toReturn = colorimg;
 		
 		/*Load Pre-trained Network */
 		NETWORK = loadNetwork();
 
 		/*Convert to grayscale mode*/
-		Mat sourceGrey = new Mat(colorimg.size(), CV_8UC1);
-		cvtColor(colorimg, sourceGrey, COLOR_BGR2GRAY);
+		Mat sourceGrey = new Mat(toReturn.size(), CV_8UC1);
+		cvtColor(toReturn, sourceGrey, COLOR_BGR2GRAY);
 		//imwrite("gray.jpg", new Mat(image)); // Save gray version of image
 
 		/*Apply Gaussian Filter*/
-		Mat blurimg = new Mat(colorimg.size(), CV_8UC1);
+		Mat blurimg = new Mat(toReturn.size(), CV_8UC1);
 		GaussianBlur(sourceGrey, blurimg, new Size(5, 5), 0);
 		//imwrite("blur.jpg", binimg);
 
 		/*Binarising Image*/
-		Mat binimg = new Mat(colorimg.size());
+		Mat binimg = new Mat(toReturn.size());
 		adaptiveThreshold(blurimg, binimg, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 19, 3);
 		//imwrite("binarise.jpg", binimg);
 
@@ -390,10 +407,10 @@ public class SudokuSolver {
                     opencv_imgproc.erode(procimg, procimg, opencv_imgproc.getStructuringElement(opencv_imgproc.MORPH_RECT, new Size(3, 3)));
                     opencv_imgproc.morphologyEx(procimg, procimg, opencv_imgproc.MORPH_CLOSE, opencv_imgproc.getStructuringElement(opencv_imgproc.MORPH_RECT, new Size(2,2)),
                     new Point(0,0), 1, BORDER_CONSTANT, new Scalar());*/
-		Mat color = new Mat(colorimg);
+		Mat color = new Mat(toReturn);
 		if (isSudokuExist(binimg)) {
-			printCornerPoints(r, colorimg);
-			//mainframe.showImage(converter.convert(colorimg));
+			printCornerPoints(r, toReturn);
+			//mainframe.showImage(converter.convert(toReturn));
 			bitwise_not(procimg, procimg);
 			Mat clonedf = new Mat(procimg.clone());
 			Mat canimg = new Mat(procimg.size());
@@ -438,7 +455,7 @@ public class SudokuSolver {
 					List<Point> points = getPoint(vlines, hlines);
 					if (points.size() != 100) {
 						//break to get another image if number of points not equal 100
-						result = new Error("Num points not equal to 100","sudokuErr");
+						this.error = new String("Num points not equal to 100");
 					}
 
 					/*Print vertical lines, horizontal lines, and the intersection between them */
@@ -504,7 +521,7 @@ public class SudokuSolver {
 							/*break to get another image if sudoku solution takes more than 5 seconds
                                         sometime it takes along time for solving sudoku as a result of incorrect digit recognition.
                                         Mostely you face this when you rotate the puzzle */
-							 result = new Error("5 Sec Timeout reached","sudokuErr");
+							 this.error = new String("5 Sec Timeout reached");
 						} catch (final Exception e) {
 							log.error(e.getMessage());
 						} finally {
@@ -514,34 +531,34 @@ public class SudokuSolver {
 						if (isContainsZero(solvedpuz)) {
 							/*  putText(procimg, "CAN Not Solve It", new Point(0, procimg.cols() / 2),
                                         FONT_HERSHEY_COMPLEX, 1, new Scalar(0, 0, 0, 0), 3, 2, false);*/
-							result = new Error("solution is invalid", "sudokuErr"); //break to get another image if solution is invalid
+							this.error = new String("solution is invalid"); //break to get another image if solution is invalid
 						} else {
 							/*resimg = colorimg.apply(r);
                                         resize(resimg, resimg, new Size(600, 600));*/
 							color = new Mat(procimg.size(), CV_8UC3);
 							cvtColor(procimg, color, COLOR_GRAY2BGR);
 							printResult(color, solvedpuz, puz, rects);
-							result = color;
+							return color;
 						}
 					} else {//break to get another image if sudoku is invalid
-						result = new Error("solution is invalid", "sudokuErr");
+						this.error = new String("solution is invalid");
 					}
 				} else {
-					result = new Error("No puzzle detected", "sudokuErr");
+					this.error = new String("No puzzle detected");
 				} //End if checkLines
 			} else {
-				result = new Error ("No puzzle detected","sudokuErr");
+				this.error = new String("No puzzle detected");
 			} // End if vlines hlines
 			clonedf.release();
 		} else {
-			result = new Error("No puzzle detected", "sudokuErr");
+			this.error = new String("No puzzle detected");
 		} //End If sudoku puzzle exists
 		try {
 			Thread.sleep(150);
 		} catch (InterruptedException ex) {
 			log.error(ex.getMessage());
 		}
-		return result;
+		return toReturn;
 	}
 	
 }

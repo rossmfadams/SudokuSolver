@@ -47,7 +47,7 @@ public class Database
 	public ArrayList<String> query(String query)
 	{
 		// Declare empty ArrayList
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> result;
 		try {
 
 			// Create Statement
@@ -67,6 +67,7 @@ public class Database
 
 				// Outer loop gets each row
 				int i = 1;
+				result = new ArrayList<String>();
 
 				do {
 					String record = "";
@@ -79,17 +80,17 @@ public class Database
 
 					result.add(record);
 				} while (rs.next());
+				return result;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			return null;
 		}
-
-		return result;
 	}
 
 	public void executeDML(String dml) throws SQLException
 	{
+		Connection conn = this.getConnection();
 		// Create a statement
 		Statement statement = conn.createStatement();
 
@@ -101,18 +102,25 @@ public class Database
 	public boolean createNewAcccount(String user, String pass) {
 		// Select username from user where username='user'
 		ArrayList<String> result;
-		String selectQuery = "select username from user where username = '" + user +"';";
+		boolean inserted = false;
+		String selectQuery = "select * from user where username = '" + user +"';";
 		result = this.query(selectQuery);
 
 		// Store the new username and encrypted password in User table;
 		if(result.equals(null))
 		{
-			String insertQuery  = "insert into user values('" + user + "', aes_encrypt('" + pass + "', 'key'));";
-			this.query(insertQuery);
+			String insertDML  = "insert into user values('" + user + "', aes_encrypt('" + pass + "', 'key'));";
+			System.out.print(insertDML);
+			try {
+				this.executeDML(insertDML);
+				inserted = true;	
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-			return true;	
 		}
-		return false;
+		return inserted;
 	}
 
 	// Determines if username and password match

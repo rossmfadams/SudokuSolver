@@ -52,7 +52,9 @@ public class LoginControl implements ActionListener
       }
       catch (IOException e)
       {
-        displayError("Error connecting to the server.");
+    	  CardLayout cardLayout = (CardLayout)container.getLayout();
+    	  cardLayout.show(container, "4");
+    	  //displayError("Error connecting to the server.");
       }
     }
   }

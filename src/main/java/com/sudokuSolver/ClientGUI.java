@@ -14,8 +14,8 @@ public class ClientGUI extends JFrame
 	{
 		// Set up the chat client.
 		SudokuClient client = new SudokuClient("localhost", 8300);
-		client.setHost("localhost");
-		client.setPort(8300);
+//		client.setHost("localhost");
+//		client.setPort(8300);
 		try
 		{
 			client.openConnection();
@@ -40,7 +40,7 @@ public class ClientGUI extends JFrame
 		InitialControl ic = new InitialControl(container,client);
 		LoginControl lc = new LoginControl(container,client);
 		CreateAccountControl cac = new CreateAccountControl(container,client);
-		SudokuControl sc = new SudokuControl(container,client);
+		SudokuControl sc = new SudokuControl(container);
 
 		//Set the client info
 		client.setLoginControl(lc);

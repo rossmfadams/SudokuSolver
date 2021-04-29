@@ -5,8 +5,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/javaworkspace/swe/SudokuSolver/mysql-connector-java-8.0.23.jar"/>
-	<classpathentry kind="lib" path="C:/javaworkspace/swe/SudokuSolver/ocsf.jar"/>
 	<classpathentry kind="src" output="target/classes" path="src/main/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
@@ -25,7 +23,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/ttred/eclipse-workspace/LabInReal/ocsf.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ttred/eclipse-workspace/LabInReal/mysql-connector-java-5.1.40-bin.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/javaworkspace/swe/SudokuSolver/mysql-connector-java-5.1.40-bin.jar"/>
+	<classpathentry kind="lib" path="C:/javaworkspace/swe/SudokuSolver/lib/ocsf.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
